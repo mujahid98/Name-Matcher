@@ -184,6 +184,5 @@ mvn test
 * Use Virtual Threads for I/O use cases
 * Add REST interface to expose name matcher as a service
 * Collect metrics for performance insights (execution time, thread count)
-* Use memory-mapped file for more efficient reading of large files
 
 ---
