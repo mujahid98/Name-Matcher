@@ -1,4 +1,4 @@
-```markdown
+
 # 🔍 Name Matcher - Java 21
 
 ## 📘 Problem Statement
