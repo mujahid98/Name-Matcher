@@ -41,6 +41,23 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
             </plugin>
+
+            <!--
+            Plugin: exec-maven-plugin
+            Purpose:
+              - Allows running the Main class directly from the command line using Maven.
+              - Useful for avoiding IDE dependency and enabling execution via terminal or scripts.
+              - Command: mvn compile exec:java -Dexec.mainClass="com.bigid.Main"
+              - If no mainClass is passed, it defaults to the one defined in <configuration>.
+               -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.bigid.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

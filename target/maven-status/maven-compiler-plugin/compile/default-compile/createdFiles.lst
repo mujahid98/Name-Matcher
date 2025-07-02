@@ -1,3 +1,4 @@
+com\bigid\util\Constants.class
 com\bigid\matcher\SimpleNameMatcher.class
 com\bigid\matcher\NameMatcher.class
 com\bigid\task\MatchCommand.class

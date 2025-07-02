@@ -6,6 +6,7 @@ import com.bigid.factory.MatcherFactory;
 import com.bigid.matcher.NameMatcher;
 import com.bigid.model.MatchLocation;
 import com.bigid.task.MatchCommand;
+import com.bigid.util.Constants;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,15 +15,9 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class Main {
-    private static final int CHUNK_SIZE = 1000;
+    private static final int CHUNK_SIZE = Constants.CHUNK_SIZE;
 
-    private static final List<String> NAMES = List.of(
-            "James", "John", "Robert", "Michael", "William", "David", "Richard", "Charles", "Joseph", "Thomas",
-            "Christopher", "Daniel", "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward", "Brian",
-            "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary", "Timothy", "Jose", "Larry", "Jeffrey",
-            "Frank", "Scott", "Eric", "Stephen", "Andrew", "Raymond", "Gregory", "Joshua", "Jerry", "Dennis",
-            "Walter", "Patrick", "Peter", "Harold", "Douglas", "Henry", "Carl", "Arthur", "Ryan", "Roger"
-    );
+    private static final List<String> NAMES = Constants.NAMES_TO_MATCH;
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -49,7 +44,7 @@ public class Main {
         System.out.println("\nDownloading and processing the file in chunks...\n");
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new URL("http://norvig.com/big.txt").openStream()))) {
+                new InputStreamReader(new URL(Constants.TEXT_FILE_URL).openStream()))) {
 
             List<String> chunk = new ArrayList<>();
             int lineOffset = 0;
