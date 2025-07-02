@@ -1,9 +1,9 @@
+com\bigid\util\FileReaderUtil.class
 com\bigid\util\Constants.class
 com\bigid\matcher\SimpleNameMatcher.class
 com\bigid\matcher\NameMatcher.class
 com\bigid\task\MatchCommand.class
 com\bigid\Main.class
-com\bigid\config\AppConfig.class
 com\bigid\factory\MatcherFactory.class
 com\bigid\model\MatchLocation.class
 com\bigid\builder\MatchResultBuilder.class

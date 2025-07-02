@@ -1,22 +1,18 @@
 package com.bigid;
 
 import com.bigid.builder.MatchResultBuilder;
-import com.bigid.config.AppConfig;
 import com.bigid.factory.MatcherFactory;
 import com.bigid.matcher.NameMatcher;
 import com.bigid.model.MatchLocation;
 import com.bigid.task.MatchCommand;
 import com.bigid.util.Constants;
+import com.bigid.util.FileReaderUtil;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class Main {
     private static final int CHUNK_SIZE = Constants.CHUNK_SIZE;
-
     private static final List<String> NAMES = Constants.NAMES_TO_MATCH;
 
     public static void main(String[] args) throws Exception {
@@ -39,33 +35,16 @@ public class Main {
         NameMatcher matcher = MatcherFactory.getMatcher(matcherType, NAMES);
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         MatchResultBuilder resultBuilder = new MatchResultBuilder();
-        List<Future<Map<String, List<MatchLocation>>>> futures = new ArrayList<>();
 
         System.out.println("\nDownloading and processing the file in chunks...\n");
 
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new URL(Constants.TEXT_FILE_URL).openStream()))) {
+        List<Future<Map<String, List<MatchLocation>>>> futures =
+                FileReaderUtil.readFromUrlInChunks(Constants.TEXT_FILE_URL, CHUNK_SIZE, (chunk, lineOffset) ->
+                        executor.submit(new MatchCommand(matcher, chunk, lineOffset))
+                );
 
-            List<String> chunk = new ArrayList<>();
-            int lineOffset = 0;
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                chunk.add(line);
-                if (chunk.size() == CHUNK_SIZE) {
-                    futures.add(executor.submit(new MatchCommand(matcher, new ArrayList<>(chunk), lineOffset)));
-                    chunk.clear();
-                    lineOffset += CHUNK_SIZE;
-                }
-            }
-
-            if (!chunk.isEmpty()) {
-                futures.add(executor.submit(new MatchCommand(matcher, chunk, lineOffset)));
-            }
-
-            for (Future<Map<String, List<MatchLocation>>> future : futures) {
-                resultBuilder.add(future.get());  // Wait for all matcher tasks
-            }
+        for (Future<Map<String, List<MatchLocation>>> future : futures) {
+            resultBuilder.add(future.get());
         }
 
         executor.shutdown();

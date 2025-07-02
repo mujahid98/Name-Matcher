@@ -61,28 +61,24 @@ Name → \[lineOffset, charOffset]
 
 ```
 
-name-matcher/
-├── pom.xml
-├── README.md
-└── src
-├── main
-│   └── java
-│       └── com
-│           └── bigid
-│               ├── Main.java                      # Entry point
-│               ├── matcher
-│               │   ├── Matcher.java               # Interface for matchers
-│               │   ├── CaseInsensitiveMatcher.java# Ignores case while matching
-│               │   └── SimpleNameMatcher.java     # Case-sensitive matcher
-│               ├── aggregator
-│               │   └── Aggregator.java            # Collects and prints results
-│               └── model
-│                   └── Location.java              # Stores line & char offset
-└── test
-└── java
-└── com
-└── bigid
-└── NameMatcherTests.java          # Unit tests
+Name-Matcher/
+├── builder/
+│   └── MatchResultBuilder.java         # Aggregates match results
+├── factory/
+│   └── MatcherFactory.java             # Creates matcher instances
+├── matcher/
+│   ├── NameMatcher.java                # Interface for matchers
+│   ├── SimpleNameMatcher.java          # Case-sensitive matcher
+│   └── CaseInsensitiveMatcher.java     # Case-insensitive matcher
+├── model/
+│   └── MatchLocation.java              # Holds line & character offset
+├── task/
+│   └── MatchCommand.java               # Runnable for each match task
+├── util/
+│   ├── Constants.java                  # Common constants including names to match, URL, chunk size
+│   └── FileReaderUtil.java             # Utility to read file in chunks from URL
+├── Main.java                          # Entry point for the application
+└── README.md                          # This file
 
 ````
 
