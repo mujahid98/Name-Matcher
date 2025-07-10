@@ -135,7 +135,7 @@ The app will then:
 
 * Uses **Platform Threads** for efficient parallel processing.
 * Each thread performs a **CPU-bound** string matching task.
-* Uses `ExecutorService` and `CompletableFuture` for managing threads and collecting results.
+* Uses `ExecutorService` and `Future` for managing threads and collecting results.
 
 ### 🧵 Why Not Virtual Threads?
 
